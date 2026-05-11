@@ -19,6 +19,6 @@ public class Paiement {
     private double montant;
     @Enumerated(EnumType.STRING)
     private TypePaiement typePaiement;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Contrat contrat;
 }

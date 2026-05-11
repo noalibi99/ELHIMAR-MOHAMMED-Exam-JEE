@@ -106,14 +106,18 @@ public class AssuranceMapperImpl {
     public PaiementDTO fromPaiement(Paiement paiement) {
         PaiementDTO dto = new PaiementDTO();
         BeanUtils.copyProperties(paiement, dto);
-        dto.setContrat(paiement.getContrat());
+        if (paiement.getContrat() != null) {
+            dto.setContratDTO(fromContrat(paiement.getContrat()));
+        }
         return dto;
     }
 
     public Paiement fromPaiementDTO(PaiementDTO dto) {
         Paiement paiement = new Paiement();
-        BeanUtils.copyProperties(dto, paiement, "contrat");
-        paiement.setContrat(dto.getContrat());
+        BeanUtils.copyProperties(dto, paiement);
+        if (dto.getContratDTO() != null) {
+            paiement.setContrat(fromContratDTO(dto.getContratDTO()));
+        }
         return paiement;
     }
 }

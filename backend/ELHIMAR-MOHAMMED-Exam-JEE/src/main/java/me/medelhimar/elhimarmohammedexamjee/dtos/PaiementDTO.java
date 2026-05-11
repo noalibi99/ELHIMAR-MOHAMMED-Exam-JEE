@@ -15,5 +15,5 @@ public class PaiementDTO {
     private Date datePaiement;
     private double montant;
     private TypePaiement typePaiement;
-    private Contrat contrat;
+    private ContratDTO contratDTO;
 }
