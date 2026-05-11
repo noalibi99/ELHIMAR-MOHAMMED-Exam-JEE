@@ -1,4 +1,4 @@
-package me.medelhimar.elhimarmohammedexamjee.entites;
+package me.medelhimar.elhimarmohammedexamjee.enums;
 
 public enum NiveauCouverture {
     BASIQUE,

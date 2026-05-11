@@ -1,24 +1,19 @@
-package me.medelhimar.elhimarmohammedexamjee.entites;
+package me.medelhimar.elhimarmohammedexamjee.dtos;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.medelhimar.elhimarmohammedexamjee.entites.Contrat;
 import me.medelhimar.elhimarmohammedexamjee.enums.TypePaiement;
 
 import java.util.Date;
 
-@Entity
 @Data
-@NoArgsConstructor @AllArgsConstructor
-public class Paiement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PaiementDTO {
     private Long id;
     private Date datePaiement;
     private double montant;
-    @Enumerated(EnumType.STRING)
     private TypePaiement typePaiement;
-    @ManyToOne(fetch = FetchType.LAZY)
     private Contrat contrat;
 }

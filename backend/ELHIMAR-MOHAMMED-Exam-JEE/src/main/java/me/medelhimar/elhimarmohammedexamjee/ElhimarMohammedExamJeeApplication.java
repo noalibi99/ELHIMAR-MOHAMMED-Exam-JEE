@@ -2,7 +2,9 @@ package me.medelhimar.elhimarmohammedexamjee;
 
 import me.medelhimar.elhimarmohammedexamjee.entites.*;
 import me.medelhimar.elhimarmohammedexamjee.enums.ContractStatus;
+import me.medelhimar.elhimarmohammedexamjee.enums.NiveauCouverture;
 import me.medelhimar.elhimarmohammedexamjee.enums.TypeLogement;
+import me.medelhimar.elhimarmohammedexamjee.enums.TypePaiement;
 import me.medelhimar.elhimarmohammedexamjee.repositories.ClientRepository;
 import me.medelhimar.elhimarmohammedexamjee.repositories.ContratRepository;
 import me.medelhimar.elhimarmohammedexamjee.repositories.PaiementRepository;
@@ -11,7 +13,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.stream.Stream;
 
