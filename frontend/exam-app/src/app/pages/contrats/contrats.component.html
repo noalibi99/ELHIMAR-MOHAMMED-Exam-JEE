@@ -1,0 +1,242 @@
+<div class="section-head">
+  <div>
+    <h1 class="h3 mb-1">Contracts</h1>
+    <p class="text-secondary mb-0">Track each subscription and its status.</p>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <label class="small text-secondary" for="statusFilter">Status</label>
+    <select
+      id="statusFilter"
+      class="form-select form-select-sm"
+      [(ngModel)]="selectedStatus"
+      (change)="updateStatusFilter()"
+    >
+      <option value="ALL">All</option>
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-3">
+  <div class="card-body">
+    <h2 class="h6 mb-3">Add contract</h2>
+    <form class="row g-3" (ngSubmit)="submitContract()">
+      <div class="col-12 col-md-3">
+        <label class="form-label" for="contractClientId">Client ID</label>
+        <input
+          id="contractClientId"
+          class="form-control"
+          type="number"
+          [(ngModel)]="newContract.clientId"
+          name="contractClientId"
+          required
+        />
+      </div>
+      <div class="col-12 col-md-3">
+        <label class="form-label" for="contractType">Type</label>
+        <select
+          id="contractType"
+          class="form-select"
+          [(ngModel)]="newContract.type"
+          name="contractType"
+        >
+          <option *ngFor="let type of contractTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-2">
+        <label class="form-label" for="contractAmount">Amount</label>
+        <input
+          id="contractAmount"
+          class="form-control"
+          type="number"
+          [(ngModel)]="newContract.montantCotisation"
+          name="contractAmount"
+        />
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="form-label" for="contractDuration">Duration</label>
+        <input
+          id="contractDuration"
+          class="form-control"
+          type="number"
+          [(ngModel)]="newContract.duree"
+          name="contractDuration"
+        />
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="form-label" for="contractRate">Coverage</label>
+        <input
+          id="contractRate"
+          class="form-control"
+          type="number"
+          step="0.01"
+          [(ngModel)]="newContract.tauxCouverture"
+          name="contractRate"
+        />
+      </div>
+
+      <div class="col-12" *ngIf="newContract.type === 'AUTOMOBILE'">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="immat">Plate number</label>
+            <input
+              id="immat"
+              class="form-control"
+              type="text"
+              [(ngModel)]="newContract.numeroImmatriculation"
+              name="immat"
+            />
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="marque">Brand</label>
+            <input
+              id="marque"
+              class="form-control"
+              type="text"
+              [(ngModel)]="newContract.marqueVehicule"
+              name="marque"
+            />
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="modele">Model</label>
+            <input
+              id="modele"
+              class="form-control"
+              type="text"
+              [(ngModel)]="newContract.modeleVehicule"
+              name="modele"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="newContract.type === 'HABITATION'">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="logementType">Housing type</label>
+            <select
+              id="logementType"
+              class="form-select"
+              [(ngModel)]="newContract.typeLogement"
+              name="logementType"
+            >
+              <option [ngValue]="undefined">Select type</option>
+              <option *ngFor="let type of logementTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-5">
+            <label class="form-label" for="adresse">Address</label>
+            <input
+              id="adresse"
+              class="form-control"
+              type="text"
+              [(ngModel)]="newContract.adresseLogement"
+              name="adresse"
+            />
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label" for="superficie">Area</label>
+            <input
+              id="superficie"
+              class="form-control"
+              type="number"
+              [(ngModel)]="newContract.superficie"
+              name="superficie"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="newContract.type === 'SANTE'">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="niveau">Coverage level</label>
+            <select
+              id="niveau"
+              class="form-select"
+              [(ngModel)]="newContract.niveauCouverture"
+              name="niveau"
+            >
+              <option [ngValue]="undefined">Select level</option>
+              <option *ngFor="let level of couvertureLevels" [value]="level">{{ level }}</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="people">People covered</label>
+            <input
+              id="people"
+              class="form-control"
+              type="number"
+              [(ngModel)]="newContract.nbrPersonnesCouvertes"
+              name="people"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-3">
+        <button class="btn btn-primary w-100" type="submit">Create contract</button>
+      </div>
+    </form>
+    <div *ngIf="successMessage" class="alert alert-success mt-3 mb-0">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-warning mt-3 mb-0">{{ errorMessage }}</div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="text-secondary">Loading contracts...</div>
+<div *ngIf="errorMessage && !successMessage" class="alert alert-warning">{{ errorMessage }}</div>
+
+<div *ngIf="!loading && !errorMessage" class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Subscription</th>
+          <th>Amount</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contrat of contrats">
+          <td>{{ contrat.id }}</td>
+          <td>{{ contrat.client?.name || 'N/A' }}</td>
+          <td>{{ contrat.type || 'N/A' }}</td>
+          <td>
+            <span class="badge" [ngClass]="statusBadge(contrat.status)">
+              {{ contrat.status || 'IN_PROGRESS' }}
+            </span>
+          </td>
+          <td>{{ contrat.dateSouscription | date: 'mediumDate' }}</td>
+          <td>{{ contrat.montantCotisation | number: '1.0-2' }}</td>
+          <td class="text-end">
+            <div class="btn-group btn-group-sm">
+              <button
+                type="button"
+                class="btn btn-outline-success"
+                (click)="validateContrat(contrat.id)"
+                [disabled]="contrat.status === 'VALIDATED'"
+              >
+                Validate
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                (click)="cancelContrat(contrat.id)"
+                [disabled]="contrat.status === 'CANCELED'"
+              >
+                Cancel
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="contrats.length === 0">
+          <td colspan="7" class="text-center text-secondary">No contracts found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

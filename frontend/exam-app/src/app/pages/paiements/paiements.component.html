@@ -1,0 +1,63 @@
+<div class="section-head">
+  <div>
+    <h1 class="h3 mb-1">Payments</h1>
+    <p class="text-secondary mb-0">Consult payments for a specific contract.</p>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-3">
+  <div class="card-body">
+    <form class="row g-2 align-items-end" (ngSubmit)="loadPaiements()">
+      <div class="col-12 col-md-4">
+        <label for="contratId" class="form-label">Contract ID</label>
+        <input
+          id="contratId"
+          type="number"
+          class="form-control"
+          [(ngModel)]="contratId"
+          name="contratId"
+          placeholder="e.g. 12"
+          required
+        />
+      </div>
+      <div class="col-12 col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Load payments</button>
+      </div>
+      <div class="col-12 col-md-5" *ngIf="total !== undefined">
+        <div class="total-pill">
+          <span class="text-secondary">Total</span>
+          <strong>{{ total | number: '1.0-2' }} DH</strong>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="loading" class="text-secondary">Loading payments...</div>
+<div *ngIf="errorMessage" class="alert alert-warning">{{ errorMessage }}</div>
+
+<div *ngIf="!loading && !errorMessage" class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paiement of paiements">
+          <td>{{ paiement.id }}</td>
+          <td>{{ paiement.datePaiement | date: 'mediumDate' }}</td>
+          <td>{{ paiement.typePaiement || 'N/A' }}</td>
+          <td>{{ paiement.montant | number: '1.0-2' }}</td>
+        </tr>
+        <tr *ngIf="paiements.length === 0">
+          <td colspan="4" class="text-center text-secondary">No payments yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

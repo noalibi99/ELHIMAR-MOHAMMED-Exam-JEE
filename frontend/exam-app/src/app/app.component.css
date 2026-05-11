@@ -1,0 +1,17 @@
+.app-shell {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1;
+}
+
+.navbar-brand {
+	letter-spacing: 0.02em;
+}
+
+.app-footer {
+	background: rgba(255, 255, 255, 0.6);
+}
